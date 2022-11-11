@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <style>
+
+    </style>
+</head>
+
+<body>
+
+    <script>
+        //请补全JavaScript代码，该函数接收两个参数
+        //分别为旧版本、新版本，当新版本高于旧版本时表明
+        //需要更新，返回true，否则返回false。
+        //注意：
+        //1.版本号格式均为"X.X.X"
+        //2.X∈[0.9]
+        //3.当两个版本号相同时，不需要更新
+        const _shouldUpdate = (oldVersion, newVersion) => {
+            //补全代码
+            oldVersion = parseInt(oldVersion.replace(/\./g, ''));
+            newVersion = parseInt(newVersion.replace(/\./g, ''));
+            return oldVersion < newVersion;
+        }
+        console.log(_shouldUpdate('1.1.1', '2.2.2'));
+    </script>
+</body>
+
+</html>

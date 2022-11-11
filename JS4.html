@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <style>
+
+    </style>
+</head>
+
+<body>
+
+    <input type="text" id="input">
+    <span id="span"></span>
+    <script>
+        //请补全JavaScript代码，要求每当id为"input"的输入框值发生改变时触发id为"span"的标签内容同步改变。
+        //注意：
+        //1. 必须使用DOM0级标准事件（onchange）
+        let inp = document.querySelector('#input');
+        let sp = document.querySelector('#span');
+        inp.onchange = function () {
+            sp.innerHTML = this.value;
+        };
+
+    </script>
+</body>
+
+</html>

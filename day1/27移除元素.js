@@ -46,6 +46,39 @@
  * @param {number} val
  * @return {number}
  */
-var removeElement = function (nums, val) {
-    
+var removeElement = function (nums, val) {//暴力解法
+    let size = nums.length;
+    for (let i = 0; i < size; i++) {
+        if (nums[i] == val) {
+            for (let j = i + 1; j < size; j++) {
+                nums[j - 1] = nums[j];
+            }
+            i--;
+            size--;
+        }
+    }
+    return size;
 };
+
+let removeElementPointer = function (nums, val) {//双指针法
+    let fastIndex = 0;
+    let slowIndex = 0;
+    while (fastIndex < nums.length) {
+        if (nums[fastIndex] == val) {
+            fastIndex++;
+        } else {
+            fastIndex++;
+            slowIndex++;
+        }
+        if (slowIndex < fastIndex && fastIndex < nums.length) {
+            nums[slowIndex] = nums[fastIndex];
+        }
+    }
+    return slowIndex;
+}
+
+//测试
+let arr = [1, 2, 3, 3, 4, 5, 5];
+console.log(removeElement(arr, 3));
+let arr1 = [1, 2, 3, 3, 4, 5, 5];
+console.log(removeElementPointer(arr1, 3));

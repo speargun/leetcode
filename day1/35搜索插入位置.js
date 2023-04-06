@@ -30,5 +30,23 @@
  * @return {number}
  */
 var searchInsert = function (nums, target) {
-
+    let left = 0;
+    let right = nums.length - 1;
+    let middle = left + ((right - left) >> 1);
+    while (left <= right) {
+        middle = left + ((right - left) >> 1);
+        if (target > nums[middle]) {
+            left = middle + 1;
+        } else if (target < nums[middle]) {
+            right = middle - 1;
+        } else {
+            return middle;
+        }
+    }
+    return target > nums[middle] ? left : middle;
 };
+
+//测试
+let nums = [1, 3, 5, 7];
+let target = 8;
+console.log(searchInsert(nums, target));

@@ -60,21 +60,44 @@ var removeElement = function (nums, val) {//暴力解法
     return size;
 };
 
-let removeElementPointer = function (nums, val) {//双指针法
-    let fastIndex = 0;
-    let slowIndex = 0;
-    while (fastIndex < nums.length) {
-        if (nums[fastIndex] == val) {
-            fastIndex++;
-        } else {
-            fastIndex++;
-            slowIndex++;
-        }
-        if (slowIndex < fastIndex && fastIndex < nums.length) {
-            nums[slowIndex] = nums[fastIndex];
+// let removeElementPointer = function (nums, val) {//双指针法
+//     let fastIndex = 0;
+//     let slowIndex = 0;
+//     while (fastIndex < nums.length) {
+//         if (nums[fastIndex] == val) {
+//             fastIndex++;
+//         } else {
+//             nums[slowIndex] = nums[fastIndex];
+//             fastIndex++;
+//             slowIndex++;
+//         }
+//         if (slowIndex < fastIndex && fastIndex < nums.length) {
+//             nums[slowIndex] = nums[fastIndex];
+//         }
+//     }
+//     return slowIndex;
+// }
+
+let removeElementPointer = function (nums, val) {//双指针法优化写法
+    let slow = 0;
+    for (let fast = 0; fast < nums.length; fast++) {
+        if (nums[fast] != val) {
+            nums[slow++] = nums[fast];
         }
     }
-    return slowIndex;
+    return slow;
+}
+
+let removeElementJS = function (nums, val) {
+    let size = nums.length;
+    for (let i = 0; i < size; i++) {
+        if (nums[i] == val) {
+            nums.splice(i, 1);//splice的实现方法就是基于数组原理，对元素进行移位
+            i--;
+            size--;
+        }
+    }
+    return size;
 }
 
 //测试
@@ -82,3 +105,5 @@ let arr = [1, 2, 3, 3, 4, 5, 5];
 console.log(removeElement(arr, 3));
 let arr1 = [1, 2, 3, 3, 4, 5, 5];
 console.log(removeElementPointer(arr1, 3));
+let arr2 = [1, 2, 3, 3, 4, 5, 5];
+console.log(removeElementJS(arr2, 3));

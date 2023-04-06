@@ -28,7 +28,7 @@ function searchRightOpen(nums, target) {//左闭右开区间
     let right = nums.length;
     let middle;
     while (left < right) {
-        middle = Math.floor((left + right) / 2);
+        middle = left + ((right - left) >> 1);
         if (target < nums[middle]) {
             right = middle;
         } else if (target > nums[middle]) {
@@ -44,7 +44,7 @@ function searchRightClose(nums, target) {//左闭右闭区间
     let right = nums.length - 1;
     let middle;
     while (left <= right) {
-        middle = Math.floor((left + right) / 2);
+        middle = left + ((right - left) >> 1);
         if (target < nums[middle]) {
             right = middle - 1;
         } else if (target > nums[middle]) {
@@ -61,4 +61,3 @@ let nums = [-1, 0, 3, 5, 9, 12];
 let target = 5;
 console.log("right open result index: ", searchRightOpen(nums, target));
 console.log("right close result index: ", searchRightClose(nums, target));
-console.log("right close recursive result index: ", searchRightCloseRecursive(nums, target));

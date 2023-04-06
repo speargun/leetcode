@@ -34,6 +34,48 @@
  * @param {number[]} nums
  * @return {number}
  */
-var minSubArrayLen = function (target, nums) {
-
+var minSubArrayLen = function (target, nums) {//暴力解法
+    let result = Infinity;
+    let subLength = 0;
+    for (let i = 0; i < nums.length; i++) {
+        let sum = 0;
+        for (let j = i; j < nums.length; j++) {
+            sum += nums[j];
+            if (sum >= target) {
+                subLength = j - i + 1;
+                result = result < subLength ? result : subLength;
+                break;
+            }
+        }
+    }
+    return result == Infinity ? 0 : result;
 };
+
+function minSubArrayLen1(target, nums) {//滑动窗口法
+    let left = 0;
+    let right = 0;
+    let sum = 0;
+    let result = Infinity;
+    for (right = 0; right < nums.length; right++) {
+        sum += nums[right];
+        while (sum >= target) {
+            result = result > right - left + 1 ? right - left + 1 : result;
+            sum -= nums[left++];
+        }
+    }
+    return result == Infinity ? 0 : result;
+}
+
+//测试
+let target = 11;
+let nums = [1, 1, 1, 1, 1, 1, 1, 1];
+console.log(minSubArrayLen(target, nums));
+console.log(minSubArrayLen1(target, nums));
+let target1 = 7;
+let nums1 = [2, 3, 1, 2, 4, 3];
+console.log(minSubArrayLen(target1, nums1));
+console.log(minSubArrayLen1(target1, nums1));
+let target2 = 15;
+let nums2 = [1, 2, 3, 4, 5];
+console.log(minSubArrayLen(target2, nums2));
+console.log(minSubArrayLen1(target2, nums2));

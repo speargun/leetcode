@@ -29,7 +29,41 @@
  * @return {number[]}
  */
 var sortedSquares = function (nums) {//暴力解法
-    for (let i = 0; i < nums.length; i++) {
-        
+    for (let i = 0; i < nums.length; i++) {//平方
+        nums[i] = nums[i] * nums[i];
     }
+    for (let i = 0; i < nums.length; i++) {//排序
+        // console.log('i:', i);
+        for (let j = 0; j < nums.length - 1; j++) {
+            if (nums[j] > nums[j + 1]) {
+                nums[j] = nums[j] ^ nums[j + 1];
+                nums[j + 1] = nums[j] ^ nums[j + 1];
+                nums[j] = nums[j] ^ nums[j + 1];
+            }
+            // console.log('j:', j, nums);
+        }
+    }
+    return nums;
 };
+
+function sortedSquaresAdvance(nums) {//双指针法
+    let arr = [];
+    let left = 0;
+    let right = nums.length - 1;
+    for (let i = nums.length - 1; i >= 0; i--) {
+        if (nums[left] * nums[left] >= nums[right] * nums[right]) {
+            arr[i] = nums[left] * nums[left];
+            left++;
+        } else {
+            arr[i] = nums[right] * nums[right];
+            right--;
+        }
+    }
+    return arr;
+}
+
+//测试
+let nums = [-7, -3, 2, 3, 11];
+console.log(sortedSquares(nums));
+let nums1 = [-7, -3, 2, 3, 11];
+console.log(sortedSquaresAdvance(nums1));

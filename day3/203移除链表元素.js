@@ -33,6 +33,67 @@
  * @param {number} val
  * @return {ListNode}
  */
-var removeElements = function (head, val) {
-
+var removeElements = function (head, val) {//傀儡头结点法
+    let dummy = new ListNode(0, head);//令傀儡头结点指向头结点，这样就不用单独处理头结点
+    let temp = dummy;
+    while (head != null) {
+        if (head.val == val) {
+            temp.next = head.next;
+        } else {
+            temp = temp.next;
+        }
+        head = head.next;
+    }
+    return dummy.next;
 };
+
+function removeElementsHead(head, val) {//单独处理头结点法
+    let cur = head;
+    while (head != null && head.val == val) {//注意这里要循环处理头结点
+        head = head.next;
+    }
+    while (cur != null && cur.next != null) {//这里用了处理下一个节点的逻辑，本质上没有什么不同，只是要注意边界条件
+        if (cur.next.val == val) {
+            cur.next = cur.next.next;
+        } else {
+            cur = cur.next;
+        }
+    }
+    return head;
+}
+
+//测试
+class ListNode {
+    val = 0;
+    next = null;
+    constructor(value, next) {
+        this.val = value;
+        this.next = next;
+    }
+}
+
+function newList(arr) {
+    let list = new ListNode(arr[0]);
+    let node = list;
+    for (let i = 1; i < arr.length; i++) {
+        node.next = new ListNode(arr[i]);
+        node = node.next;
+    }
+    return list;
+}
+
+function printList(list) {
+    let arr = [];
+    while (list) {
+        arr.push(list.val);
+        list = list.next;
+    }
+    console.log(arr);
+}
+
+let list = newList([6, 1, 6, 6, 2, 6]);
+printList(removeElements(list, 6));
+printList(removeElementsHead(list, 6));
+let list1 = newList([1, 2, 3, 4, 5]);
+printList(removeElements(list1, 6));
+printList(removeElementsHead(list1, 6));

@@ -35,6 +35,75 @@
  * @param {ListNode} head
  * @return {ListNode}
  */
-var reverseList = function (head) {
-
+var reverseList = function (head) {//借用数组
+    let cur = head;
+    let arr = [];
+    while (cur) {
+        arr.push(cur.val);
+        cur = cur.next;
+    }
+    cur = head;
+    while (cur) {
+        cur.val = arr.pop();
+        cur = cur.next;
+    }
+    return head;
 };
+
+function reverseListAd(head) {//用prev
+    let cur = head;
+    let prev = null;
+    while (cur) {
+        let temp = cur.next;
+        cur.next = prev;
+        prev = cur;
+        cur = temp;
+    }
+    return prev;
+}
+
+function reverseListRe(prev, cur) {//用递归
+    if (cur == null) {
+        return prev;
+    }
+    let temp = cur.next;
+    cur.next = prev;
+    return reverseListRe(cur, temp);
+}
+
+//测试
+class ListNode {
+    val = null;
+    next = null;
+    constructor(value, next) {
+        this.val = value;
+        this.next = next;
+    }
+}
+
+function newList(arr) {
+    let list = null;
+    if (arr.length > 0) {
+        list = new ListNode(arr[0]);
+        let node = list;
+        for (let i = 1; i < arr.length; i++) {
+            node.next = new ListNode(arr[i]);
+            node = node.next;
+        }
+    }
+    return list;
+}
+
+function printList(list) {
+    let arr = [];
+    while (list) {
+        arr.push(list.val);
+        list = list.next;
+    }
+    console.log(arr);
+}
+
+let list = newList([1, 2, 3, 4, 5, 6, 7]);
+printList(reverseListAd(list));
+printList(reverseListRe(null, list));
+// printList(reverseList(reverseList(list)));

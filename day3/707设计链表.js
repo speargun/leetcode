@@ -37,8 +37,19 @@
 // 0 <= index, val <= 1000
 // 请不要使用内置的 LinkedList 库。
 // 调用 get、addAtHead、addAtTail、addAtIndex 和 deleteAtIndex 的次数不超过 2000 。
+class MyLinkedNode {
+    val = null;
+    next = null;
+    prev = null;
+    constructor(val, next, prev) {
+        this.val = val;
+        this.next = next;
+        this.prev = prev;
+    }
+}
 var MyLinkedList = function () {
-
+    this.dummy = new MyLinkedNode();
+    this.size = 0;
 };
 
 /** 
@@ -46,7 +57,13 @@ var MyLinkedList = function () {
  * @return {number}
  */
 MyLinkedList.prototype.get = function (index) {
-
+    let dummy = this.dummy;
+    let i = -1;
+    while (i < index && dummy.next != null) {
+        i++;
+        dummy = dummy.next;
+    }
+    return i == index ? dummy.val : -1;
 };
 
 /** 
@@ -54,7 +71,13 @@ MyLinkedList.prototype.get = function (index) {
  * @return {void}
  */
 MyLinkedList.prototype.addAtHead = function (val) {
-
+    let dummy = this.dummy;
+    let node = new MyLinkedNode(val, dummy.next, dummy);
+    if (dummy.next) {
+        dummy.next.prev = node;
+    }
+    dummy.next = node;
+    this.size++;
 };
 
 /** 
@@ -62,7 +85,13 @@ MyLinkedList.prototype.addAtHead = function (val) {
  * @return {void}
  */
 MyLinkedList.prototype.addAtTail = function (val) {
-
+    let dummy = this.dummy;
+    for (let i = 0; i < this.size; i++) {
+        dummy = dummy.next;
+    }
+    let node = new MyLinkedNode(val, null, dummy);
+    dummy.next = node;
+    this.size++;
 };
 
 /** 
@@ -71,7 +100,18 @@ MyLinkedList.prototype.addAtTail = function (val) {
  * @return {void}
  */
 MyLinkedList.prototype.addAtIndex = function (index, val) {
-
+    if (index <= this.size && index >= 0) {
+        let dummy = this.dummy;
+        for (let i = 0; i < index; i++) {
+            dummy = dummy.next;
+        }
+        let node = new MyLinkedNode(val, dummy.next, dummy);
+        if (dummy.next) {
+            dummy.next.prev = node;
+        }
+        dummy.next = node;
+        this.size++;
+    }
 };
 
 /** 
@@ -79,7 +119,17 @@ MyLinkedList.prototype.addAtIndex = function (index, val) {
  * @return {void}
  */
 MyLinkedList.prototype.deleteAtIndex = function (index) {
-
+    if (index < this.size && index >= 0) {
+        let dummy = this.dummy;
+        for (let i = 0; i <= index; i++) {
+            dummy = dummy.next;
+        }
+        if (dummy.next) {
+            dummy.next.prev = dummy.prev;
+        }
+        dummy.prev.next = dummy.next;
+        this.size--;
+    }
 };
 
 /**
@@ -91,3 +141,39 @@ MyLinkedList.prototype.deleteAtIndex = function (index) {
  * obj.addAtIndex(index,val)
  * obj.deleteAtIndex(index)
  */
+
+//测试
+function printList(list) {
+    list = list.dummy.next;
+    let arr = [];
+    while (list.next) {
+        arr.push(list.val);
+        list = list.next;
+    }
+    arr.push(list.val);
+    console.log(arr);
+}
+
+var obj = new MyLinkedList();//初始化MyLinkedList
+console.log(obj.get(0));//get(Index)
+obj.addAtHead(5);//头插节点
+obj.addAtHead(4);
+obj.addAtHead(3);
+obj.addAtHead(2);
+obj.addAtHead(1);
+printList(obj);
+console.log(obj.get(3));//get(Index)
+obj.addAtTail(6);//尾插节点
+obj.addAtTail(8);
+obj.addAtTail(9);
+obj.addAtTail(10);
+obj.addAtTail(11);
+printList(obj);
+obj.addAtIndex(6, 7);//按位置插入
+obj.addAtIndex(0, 0);
+obj.addAtIndex(12, 12);
+printList(obj);
+obj.deleteAtIndex(12);//按位置删除
+obj.deleteAtIndex(5);
+obj.deleteAtIndex(0);
+printList(obj);

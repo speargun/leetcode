@@ -39,5 +39,50 @@
  * @return {ListNode}
  */
 var removeNthFromEnd = function (head, n) {
-
+    let dummy = new ListNode(null, head);
+    let fast = slow = dummy;
+    for (let count = 0; count < n - 1; count++) {
+        fast = fast.next;
+    }
+    while (fast.next && fast.next.next) {
+        fast = fast.next;
+        slow = slow.next;
+    }
+    slow.next = slow.next.next;
+    return dummy.next;
 };
+
+//测试
+class ListNode {
+    val = null;
+    next = null;
+    constructor(value, next) {
+        this.val = value;
+        this.next = next;
+    }
+}
+
+function newList(arr) {
+    let list = null;
+    if (arr.length > 0) {
+        list = new ListNode(arr[0]);
+        let node = list;
+        for (let i = 1; i < arr.length; i++) {
+            node.next = new ListNode(arr[i]);
+            node = node.next;
+        }
+    }
+    return list;
+}
+
+function printList(list) {
+    let arr = [];
+    while (list) {
+        arr.push(list.val);
+        list = list.next;
+    }
+    console.log(arr);
+}
+
+let list = newList([1, 2, 3, 4, 5]);
+printList(removeNthFromEnd(list, 3));

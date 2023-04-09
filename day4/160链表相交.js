@@ -79,6 +79,32 @@
  * @param {ListNode} headB
  * @return {ListNode}
  */
-var getIntersectionNode = function (headA, headB) {
-
+var getIntersectionNode = function (headA, headB) {//交换链表法
+    let pointerA = headA;
+    let pointerB = headB;
+    while (pointerA !== pointerB) {
+        if (pointerA == null) {
+            pointerA = headB;
+        } else {
+            pointerA = pointerA.next;
+        }
+        if (pointerB == null) {
+            pointerB = headA;
+        } else {
+            pointerB = pointerB.next;
+        }
+    }
+    return pointerA;
 };
+
+function getIntersectionNodeSimple(headA, headB) {//交换链表法简洁写法
+    let pointerA = headA;
+    let pointerB = headB;
+    while (pointerA !== pointerB) {
+        pointerA = pointerA == null ? headB : pointerA.next;
+        pointerB = pointerB == null ? headA : pointerB.next;
+    }
+    return pointerA;
+}
+
+//测试在leetcode上进行

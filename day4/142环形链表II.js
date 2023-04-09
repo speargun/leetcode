@@ -50,5 +50,20 @@
  * @return {ListNode}
  */
 var detectCycle = function (head) {
-
+    let fast = head;
+    let slow = head;
+    while (fast && fast.next) {
+        slow = slow.next;
+        fast = fast.next.next;
+        if (slow == fast) {
+            let pointer1 = head;
+            let pointer2 = fast;
+            while (pointer1 != pointer2) {
+                pointer1 = pointer1.next;
+                pointer2 = pointer2.next;
+            }
+            return pointer1;
+        }
+    }
+    return null;
 };

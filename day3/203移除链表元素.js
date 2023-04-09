@@ -64,7 +64,7 @@ function removeElementsHead(head, val) {//单独处理头结点法
 
 //测试
 class ListNode {
-    val = 0;
+    val = null;
     next = null;
     constructor(value, next) {
         this.val = value;
@@ -73,11 +73,14 @@ class ListNode {
 }
 
 function newList(arr) {
-    let list = new ListNode(arr[0]);
-    let node = list;
-    for (let i = 1; i < arr.length; i++) {
-        node.next = new ListNode(arr[i]);
-        node = node.next;
+    let list = null;
+    if (arr.length > 0) {
+        list = new ListNode(arr[0]);
+        let node = list;
+        for (let i = 1; i < arr.length; i++) {
+            node.next = new ListNode(arr[i]);
+            node = node.next;
+        }
     }
     return list;
 }

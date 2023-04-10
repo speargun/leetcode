@@ -14,10 +14,10 @@
 // 输入：n = 19
 // 输出：true
 // 解释：
-// 12 + 92 = 82
-// 82 + 22 = 68
-// 62 + 82 = 100
-// 12 + 02 + 02 = 1
+// 1^2 + 9^2 = 82
+// 8^2 + 2^2 = 68
+// 6^2 + 8^2 = 100
+// 1^2 + 0^2 + 0^2 = 1
 // 示例 2：
 
 // 输入：n = 2
@@ -26,11 +26,31 @@
 
 // 提示：
 
-// 1 <= n <= 231 - 1
+// 1 <= n <= 2^31 - 1
 /**
  * @param {number} n
  * @return {boolean}
  */
 var isHappy = function (n) {
-
+    let redundant = new Set();
+    while (true) {
+        let sum = 0;
+        while (n) {
+            sum += (n % 10) * (n % 10);
+            n = parseInt(n / 10);
+        }
+        if (sum == 1) {
+            return true;
+        }
+        if (redundant.has(sum)) {
+            return false;
+        } else {
+            redundant.add(sum);
+        }
+        n = sum;
+    }
 };
+
+//测试
+let n = 19;
+console.log(isHappy(n));

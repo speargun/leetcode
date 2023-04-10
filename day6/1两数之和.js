@@ -36,5 +36,18 @@
  * @return {number[]}
  */
 var twoSum = function (nums, target) {
-
+    let store = new Map();
+    for (let i = 0; i < nums.length; i++) {
+        if (store.get(target - nums[i]) != undefined) {
+            return [i, store.get(target - nums[i])];
+        } else {
+            store.set(nums[i], i);
+        }
+    }
+    return false;
 };
+
+//测试
+let nums = [2, 7, 11, 15];
+let target = 9;
+console.log(twoSum(nums, target));

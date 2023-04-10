@@ -27,5 +27,20 @@
  * @return {boolean}
  */
 var isAnagram = function (s, t) {
-
+    if (s.length != t.length) return false;
+    const base = 'a'.charCodeAt();
+    const baseSet = new Array(1000).fill(0);
+    for (const i of s) {
+        baseSet[i.charCodeAt() - base]++;
+    }
+    for (const i of t) {
+        if (!baseSet[i.charCodeAt() - base]) return false;
+        baseSet[i.charCodeAt() - base]--;
+    }
+    return true;
 };
+
+//测试
+let s = 'ratrr';
+let t = 'rttar';
+console.log(isAnagram(s, t));

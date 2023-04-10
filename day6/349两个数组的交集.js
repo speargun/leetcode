@@ -22,6 +22,25 @@
  * @param {number[]} nums2
  * @return {number[]}
  */
-var intersection = function (nums1, nums2) {
-
+var intersection = function (nums1, nums2) {//Set解决
+    return [...new Set(nums2.filter(item => new Set(nums1).has(item)))];
 };
+
+function intersectionArr(nums1, nums2) {//数组解决
+    let hash = new Array(1002);
+    let arr = new Set();
+    for (let i = 0; i < nums1.length; i++) {
+        hash[nums1[i]] = 1;
+    }
+    for (let i = 0; i < nums2.length; i++) {
+        if (hash[nums2[i]] == 1) {
+            arr.add(nums2[i]);
+        }
+    }
+    return [...arr];
+}
+
+//测试
+let nums1 = [4, 9, 5];
+let nums2 = [9, 4, 9, 8, 4];
+console.log(intersection(nums1, nums2));

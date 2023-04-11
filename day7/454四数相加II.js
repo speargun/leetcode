@@ -34,5 +34,28 @@
  * @return {number}
  */
 var fourSumCount = function (nums1, nums2, nums3, nums4) {
-
+    let store = new Map();
+    let sum = 0;
+    for (let i of nums1) {
+        for (let j of nums2) {
+            if (!store.has(i + j)) {
+                store.set(i + j, 1);
+            } else {
+                store.set(i + j, store.get(i + j) + 1);
+            }
+        }
+    }
+    for (let i of nums3) {
+        for (let j of nums4) {
+            ;
+            if (store.has(0 - i - j)) {
+                sum += store.get(0 - i - j);
+            }
+        }
+    }
+    return sum;
 };
+
+//测试
+let nums1 = [1, 2], nums2 = [-2, -1], nums3 = [-1, 2], nums4 = [0, 2];
+console.log(fourSumCount(nums1, nums2, nums3, nums4));

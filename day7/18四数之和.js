@@ -28,5 +28,36 @@
  * @return {number[][]}
  */
 var fourSum = function (nums, target) {
+    nums = nums.sort((a, b) => { return a - b });
+    let arr = [];
+    for (let a = 0; a < nums.length; a++) {
+        if (nums[a] > target && nums[a] >= 0) break;//剪枝
 
+        if (a > 0 && nums[a] == nums[a - 1]) continue;//去重
+
+        for (let b = a + 1; b < nums.length; b++) {
+            if (nums[a] + nums[b] > target && nums[b] >= 0) break;//二级剪枝
+
+            if (b > a + 1 && nums[b] == nums[b - 1]) continue;//去重
+
+            let c = b + 1;
+            let d = nums.length - 1;
+            while (c < d) {
+                if (nums[a] + nums[b] + nums[c] + nums[d] > target) d--;
+                else if (nums[a] + nums[b] + nums[c] + nums[d] < target) c++;
+                else {
+                    arr.push([nums[a], nums[b], nums[c], nums[d]]);
+                    while (c < d && nums[d] == nums[d - 1]) d--;
+                    while (c < d && nums[c] == nums[c + 1]) c++;
+                    d--;
+                    c++;
+                }
+            }
+        }
+    }
+    return arr;
 };
+
+//测试
+let nums = [1, 0, -1, 0, -2, 2], target = 0;
+console.log(fourSum(nums, target));

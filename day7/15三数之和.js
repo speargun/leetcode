@@ -39,5 +39,31 @@
  * @return {number[][]}
  */
 var threeSum = function (nums) {
-
+    if (nums.length < 3) return false;
+    nums = nums.sort((a, b) => { return a - b });
+    let arr = [];
+    for (let i = 0; i < nums.length; i++) {
+        if (nums[i] > 0) return arr;
+        if (i > 0 && nums[i] == nums[i - 1]) {
+            continue;
+        }
+        let left = i + 1;
+        let right = nums.length - 1;
+        while (left < right) {
+            if (nums[left] + nums[i] + nums[right] > 0) right--;
+            else if (nums[left] + nums[i] + nums[right] < 0) left++;
+            else {
+                arr.push([nums[left], nums[i], nums[right]]);
+                while (right > left && nums[right] == nums[right - 1]) right--;
+                while (right > left && nums[left] == nums[left + 1]) left++;
+                right--;
+                left++;
+            }
+        }
+    }
+    return arr;
 };
+
+//测试
+let nums = [-1, 0, 1, 2, -1, -4];
+console.log(threeSum(nums));

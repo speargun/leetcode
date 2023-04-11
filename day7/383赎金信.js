@@ -29,6 +29,41 @@
  * @param {string} magazine
  * @return {boolean}
  */
-var canConstruct = function (ransomNote, magazine) {
-
+var canConstruct = function (ransomNote, magazine) {//map法
+    let code = new Map();
+    for (i of magazine) {
+        if (!code.has(i)) {
+            code.set(i, 1);
+        } else {
+            code.set(i, code.get(i) + 1);
+        }
+    }
+    for (i of ransomNote) {
+        if (!code.has(i) || code.get(i) < 1) {
+            return false;
+        }
+        code.set(i, code.get(i) - 1);
+    }
+    return true;
 };
+
+function canConstructArr(ransomNote, magazine) {//数组法
+    let arr = new Array(26).fill(0);
+    let base = 'a'.charCodeAt();
+    ransomNote = ransomNote.split('');
+    magazine = magazine.split('');
+    for (i of magazine) {
+        arr[i.charCodeAt() - base]++;
+    }
+    for (i of ransomNote) {
+        if (arr[i.charCodeAt() - base] < 1) {
+            return false;
+        }
+        arr[i.charCodeAt() - base]--;
+    }
+    return true;
+}
+
+//测试
+let ransomNote = "aa", magazine = "ab";
+console.log(canConstruct(ransomNote, magazine));

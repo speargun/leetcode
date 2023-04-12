@@ -41,6 +41,10 @@ var reverseString = function (s, start, end) {//反转指定区间的字符
     return s;
 };
 
+function reverseLeftWordsExtra(s, n) {//申请额外空间的方法
+    return (s + s).slice(n, s.length + n);
+}
+
 //测试
 let s = "abcdefg", k = 4;
 console.log(reverseLeftWords(s, k)); 

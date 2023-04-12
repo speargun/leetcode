@@ -34,5 +34,47 @@
  * @return {string}
  */
 var reverseWords = function (s) {
-
+    s = removeExtraSpace(s);//移除多余的空格
+    s = s.split('');
+    s = reverseString(s, 0, s.length - 1);//反转整个字符串
+    let slow = 0;
+    for (let fast = 0; fast < s.length; fast++) {//反转每个单词
+        if (fast == s.length - 1 || s[fast + 1] == ' ') {
+            s = reverseString(s, slow, fast);
+            slow = fast + 2;
+        }
+    }
+    return s.join('');
 };
+
+function removeExtraSpace(s) {//移除多余的空格
+    s = s.split('');
+    let slow = 0;
+    for (let fast = 0; fast < s.length; fast++) {
+        if (s[fast] != ' ') {//fast指针检索新数组中的元素
+            if (slow != 0) s[slow++] = ' ';//每个单词后添加空格
+            while (fast < s.length && s[fast] != ' ') {//每次将一整个单词存入
+                s[slow++] = s[fast++];//slow指针存放所有符合新数组条件的元素
+            }
+        }
+    }
+    s.length = slow;//将数组缩小为新数组的长度
+    return s.join('');
+}
+
+var reverseString = function (s, start, end) {//反转指定区间的字符
+    let slow = start;
+    let fast = end;
+    while (slow < fast) {
+        let temp = s[slow];
+        s[slow] = s[fast];
+        s[fast] = temp;
+        slow++;
+        fast--;
+    }
+    return s;
+};
+
+//测试
+s = "  the sky is  blue ";
+console.log(reverseWords(s));

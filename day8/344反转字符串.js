@@ -14,7 +14,7 @@
 // 输出：["h","a","n","n","a","H"]
 //  
 
-// 提示：
+// 提示：wa
 
 // 1 <= s.length <= 10^5
 // s[i] 都是 ASCII 码表中的可打印字符
@@ -23,5 +23,18 @@
  * @return {void} Do not return anything, modify s in-place instead.
  */
 var reverseString = function (s) {
-
+    let slow = 0;
+    let fast = s.length - 1;
+    while (slow < fast) {
+        let temp = s[slow];
+        s[slow] = s[fast];
+        s[fast] = temp;
+        slow++;
+        fast--;
+    }
+    return s;
 };
+
+//测试
+let s = ["h", "e", "l", "l", "o"];
+console.log(reverseString(s));

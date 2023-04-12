@@ -25,5 +25,22 @@
  * @return {string}
  */
 var reverseStr = function (s, k) {
-
+    s = s.split('');
+    for (let i = 0; i < s.length; i += 2 * k) {
+        let slow = i;
+        let fast = i + k <= s.length ? i + k - 1 : s.length - 1;
+        while (slow < fast) {
+            let temp = s[slow];
+            s[slow] = s[fast];
+            s[fast] = temp;
+            slow++;
+            fast--;
+        }
+    }
+    return s.join('');
 };
+
+//测试
+let s = 'abcdefghijklmn';
+let k = 2;
+console.log(reverseStr(s, k));

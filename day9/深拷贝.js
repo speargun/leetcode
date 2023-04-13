@@ -234,7 +234,8 @@ function cloneSymbol(symbol) {
 
 const test = {
     name: 'a',
-    date: new Date()
+    date: new Date(),
+    f: function () { console.log('abcd') }
 };
 
 let clone = cloneDeep(test);

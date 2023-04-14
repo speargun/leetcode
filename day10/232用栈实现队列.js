@@ -35,7 +35,8 @@
 // 最多调用 100 次 push、pop、peek 和 empty
 // 假设所有操作都是有效的 （例如，一个空的队列不会调用 pop 或者 peek 操作）
 var MyQueue = function () {
-
+    this.stackIn = [];
+    this.stackOut = [];
 };
 
 /** 
@@ -43,28 +44,34 @@ var MyQueue = function () {
  * @return {void}
  */
 MyQueue.prototype.push = function (x) {
-
+    this.stackIn.push(x);
 };
 
 /**
  * @return {number}
  */
 MyQueue.prototype.pop = function () {
-
+    if (this.stackOut.length) return this.stackOut.pop();
+    while (this.stackIn.length > 1) {
+        this.stackOut.push(this.stackIn.pop());
+    }
+    return this.stackIn.pop();
 };
 
 /**
  * @return {number}
  */
 MyQueue.prototype.peek = function () {
-
+    let x = this.pop();
+    this.stackOut.push(x);
+    return x;
 };
 
 /**
  * @return {boolean}
  */
 MyQueue.prototype.empty = function () {
-
+    return (!this.stackIn.length && !this.stackOut.length);
 };
 
 /**
@@ -75,3 +82,9 @@ MyQueue.prototype.empty = function () {
  * var param_3 = obj.peek()
  * var param_4 = obj.empty()
  */
+
+var obj = new MyQueue();
+obj.push(1);
+var param_2 = obj.pop();
+var param_3 = obj.peek();
+var param_4 = obj.empty();

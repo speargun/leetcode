@@ -40,7 +40,7 @@
 
 // 进阶：你能否仅用一个队列来实现栈。
 var MyStack = function () {
-
+    this.queue = [];
 };
 
 /** 
@@ -48,28 +48,73 @@ var MyStack = function () {
  * @return {void}
  */
 MyStack.prototype.push = function (x) {
-
+    this.queue.push(x);
 };
 
 /**
  * @return {number}
  */
 MyStack.prototype.pop = function () {
-
+    for (let i = 0; i < this.queue.length - 1; i++) {
+        this.queue.push(this.queue.shift());
+    }
+    return this.queue.shift();
 };
 
 /**
  * @return {number}
  */
 MyStack.prototype.top = function () {
-
+    let x = this.pop();
+    this.push(x);
+    return x;
 };
 
 /**
  * @return {boolean}
  */
 MyStack.prototype.empty = function () {
+    return !this.queue.length;
+};
 
+var MyStack1 = function () {
+    this.queue1 = [];
+    this.queue2 = [];
+};
+
+/** 
+ * @param {number} x
+ * @return {void}
+ */
+MyStack1.prototype.push = function (x) {
+    this.queue1.push(x);
+};
+
+/**
+ * @return {number}
+ */
+MyStack1.prototype.pop = function () {
+    if (!this.queue1.length) [this.queue1, this.queue2] = [this.queue2, this.queue1];
+    while (this.queue1.length > 1) {
+        this.queue2.push(this.queue1.shift());
+    }
+    return this.queue1.shift();
+};
+
+/**
+ * @return {number}
+ */
+MyStack1.prototype.top = function () {
+    let x = this.pop();
+    this.queue1.push(x);
+    return x;
+};
+
+/**
+ * @return {boolean}
+ */
+MyStack1.prototype.empty = function () {
+    return !this.queue1.length && !this.queue2.length;
 };
 
 /**

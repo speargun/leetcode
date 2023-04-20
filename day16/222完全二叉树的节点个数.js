@@ -39,8 +39,25 @@
  * @param {TreeNode} root
  * @return {number}
  */
-var countNodes = function(root) {
+var countNodes = function (root) {//普通二叉树解法
+    if (!node) return 0;
+    return 1 + countNodes(node.left) + countNodes(node.right);
+}
 
+var countNodesComplete = function (root) {//完全二叉树特解
+    if (!root) return 0;
+    let leftDepth = 0, rightDepth = 0;
+    let left = root.left, right = root.right;
+    while (left) {
+        leftDepth++;
+        left = left.left;
+    }
+    while (right) {
+        rightDepth++;
+        right = right.right;
+    }
+    if (leftDepth == rightDepth) return (2 << leftDepth) - 1;
+    return countNodes(root.left) + countNodes(root.right) + 1;
 };
 
 //test

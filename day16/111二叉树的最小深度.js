@@ -33,9 +33,49 @@
  * @param {TreeNode} root
  * @return {number}
  */
-var minDepth = function(root) {
-
+var minDepth = function (root) {//后序，处理顺序是左，右，中
+    if (!root) return 0;
+    if (!root.left && root.right) return 1 + minDepth(root.right);
+    if (root.left && !root.right) return 1 + minDepth(root.left);
+    return 1 + Math.min(minDepth(root.left), minDepth(root.right));
 };
+
+var minDepthPreorder = function (root) {
+    let result = Infinity;
+    if (!root) return 0;
+    function getDepth(node, depth) {
+        if (!node.left && !node.right) {
+            result = Math.min(depth, result);//中
+            return;
+        }
+        if (node.left) {//左
+            getDepth(node.left, depth + 1);
+        }
+        if (node.right) {//右
+            getDepth(node.right, depth + 1);
+        }
+        return;
+    }
+    getDepth(root, 1);
+    return result;
+};
+
+function minDepthLevelorder(root) {//迭代法用层序
+    let depth = 0;
+    let queue = [];
+    if (root) queue.push(root);
+    while (queue.length) {
+        let size = queue.length;
+        depth++;
+        for (let i = 0; i < size; i++) {
+            let node = queue.shift();
+            if (node.left) queue.push(node.left);
+            if (node.right) queue.push(node.right);
+            if (!node.left && !node.right) return depth;
+        }
+    }
+    return depth;
+}
 
 //test
 function TreeNode(val, left, right) {

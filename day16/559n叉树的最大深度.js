@@ -36,9 +36,46 @@
  * @param {Node|null} root
  * @return {number}
  */
-var maxDepth = function (root) {
-
+var maxDepth = function (root) {//后序，处理顺序是左，右，中
+    if (!root) return 0;
+    let depth = 0;
+    for (let i = 0; i < root.children.length; i++) {
+        depth = Math.max(depth, maxDepth(root.children[i]));
+    }
+    return 1 + depth;
 };
+
+function maxDepthPreorder(root) {//前序
+    let result = 0;
+    if (!root) return result;
+    function getDepth(node, depth) {
+        result = Math.max(depth, result);//中
+        if (!node.children.length) return;
+        for (child of node.children) {
+            if (child) getDepth(child, depth + 1);
+        }
+        return;
+    }
+    getDepth(root, 1);
+    return result;
+}
+
+function maxDepthLevelorder(root) {//迭代法用层序
+    let depth = 0;
+    let queue = [];
+    if (root) queue.push(root);
+    while (queue.length) {
+        let size = queue.length;
+        depth++;
+        for (let i = 0; i < size; i++) {
+            let node = queue.shift();
+            for (let i = 0; i < node.children.length; i++) {
+                if (node.children[i]) queue.push(node.children[i]);
+            }
+        }
+    }
+    return depth;
+}
 
 //test
 function TreeNode(val, left, right) {

@@ -44,9 +44,42 @@
  * @param {number} targetSum
  * @return {boolean}
  */
-var hasPathSum = function (root, targetSum) {
-
+var hasPathSum = function (root, targetSum) {//加和
+    if (!root) return false;
+    function traversal(node, sum) {
+        sum += node.val;
+        if (!node.left && !node.right) {
+            return sum == targetSum;
+        }
+        if (node.left) { if (traversal(node.left, sum)) return true; }
+        if (node.right) { if (traversal(node.right, sum)) return true; }
+        return false;
+    }
+    return traversal(root, 0);
 };
+
+function hasPathSum(root, targetSum) {//减
+    if (!root) return false;
+    if (!root.left && !root.right && targetSum == root.val) return true;
+    return hasPathSum(root.left, targetSum - root.val) || hasPathSum(root.right, targetSum - root.val);
+}
+
+function hasPathSum(root, targetSum) {//迭代
+    if (!root) return false;
+    let stack = [];
+    stack.push([root, root.val]);//同时还要保存节点的值
+    while (stack.length) {
+        let node = stack.pop();
+        if (!node[0].left && !node[0].right && node[1] == targetSum) return true;
+        if (node[0].right) {
+            stack.push([node[0].right, node[1] + node[0].right.val]);
+        }
+        if (node[0].left) {
+            stack.push([node[0].left, node[1] + node[0].left.val]);
+        }
+    }
+    return false;
+}
 
 //test
 function TreeNode(val, left, right) {

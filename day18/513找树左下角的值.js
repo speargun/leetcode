@@ -34,9 +34,39 @@
  * @param {TreeNode} root
  * @return {number}
  */
-var findBottomLeftValue = function (root) {
-
+var findBottomLeftValue = function (root) {//递归法
+    let res = 0;
+    let maxDepth = -1;
+    function traverse(node, depth) {
+        if (!node.left && !node.right) {
+            if (depth > maxDepth) {
+                maxDepth = depth;
+                res = node.val;
+            }
+            return;
+        }
+        if (node.left) traverse(node.left, depth + 1);
+        if (node.right) traverse(node.right, depth + 1);
+    }
+    traverse(root, 0);
+    return res;
 };
+
+function findBottomLeftValueLevel(root) {//层序
+    let res = 0;
+    let queue = [];
+    if (root) queue.push(root);
+    while (queue.length) {
+        let size = queue.length;
+        for (let i = 0; i < size; i++) {
+            let node = queue.shift();
+            if (i == 0) res = node.val;
+            if (node.left) queue.push(node.left);
+            if (node.right) queue.push(node.right);
+        }
+    }
+    return res;
+}
 
 //test
 function TreeNode(val, left, right) {

@@ -39,7 +39,29 @@
  * @return {number[][]}
  */
 var pathSum = function (root, targetSum) {
-
+    let res = [];
+    if (!root) return res;
+    let path = [root.val];
+    function traversal(node, sum) {
+        if (!node.left && !node.right && sum == 0) {
+            res.push([...path]);
+            return;
+        }
+        if (!node.left && !node.right) return;
+        if (node.left) {
+            path.push(node.left.val);
+            traversal(node.left, sum - node.left.val);
+            path.pop();
+        }
+        if (node.right) {
+            path.push(node.right.val);
+            traversal(node.right, sum - node.right.val);
+            path.pop();
+        }
+        return;
+    }
+    traversal(root, targetSum - root.val);
+    return res;
 };
 
 //test

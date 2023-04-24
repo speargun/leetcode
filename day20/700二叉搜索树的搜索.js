@@ -36,9 +36,22 @@
  * @param {number} val
  * @return {TreeNode}
  */
-var searchBST = function (root, val) {
-
+var searchBST = function (root, val) {//递归法
+    if (!root || root.val == val) return root;
+    let result = new TreeNode();
+    if (root.val > val) result = searchBST(root.left, val);
+    if (root.val < val) result = searchBST(root.right, val);
+    return result;
 };
+
+function searchBST(root, val) {//迭代法
+    while (root) {
+        if (root.val > val) root = root.left;
+        else if (root.val < val) root = root.right;
+        else return root;
+    }
+    return null;
+}
 
 //test
 function TreeNode(val, left, right) {

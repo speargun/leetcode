@@ -47,7 +47,19 @@
  * @return {TreeNode}
  */
 var constructMaximumBinaryTree = function (nums) {
-
+    function traversal(nums) {
+        if (!nums.length) {
+            return null;
+        }
+        let max = Math.max.apply(this, nums);
+        let leftArr = nums.slice(0, nums.indexOf(max));
+        let rightArr = nums.indexOf(max) < nums.length - 1? nums.slice(nums.indexOf(max) + 1, nums.length):[];
+        let root = new TreeNode(max);
+        root.left = traversal(leftArr);
+        root.right = traversal(rightArr);
+        return root;
+    }
+    return traversal(nums);
 };
 
 //test

@@ -36,8 +36,14 @@
  * @param {TreeNode} root2
  * @return {TreeNode}
  */
-var mergeTrees = function(root1, root2) {
-
+var mergeTrees = function (root1, root2) {
+    if (!root1 && !root2) return null;
+    let root = new TreeNode(0);
+    if (root1) root.val += root1.val;
+    if (root2) root.val += root2.val;
+    root.left = mergeTrees(root1 ? root1.left : null, root2 ? root2.left : null);
+    root.right = mergeTrees(root1 ? root1.right : null, root2 ? root2.right : null);
+    return root;
 };
 
 //test

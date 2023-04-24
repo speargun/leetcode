@@ -36,9 +36,33 @@
  * @param {TreeNode} root
  * @return {boolean}
  */
-var isValidBST = function (root) {
-
+var isValidBST = function (root) {//变数组法
+    let arr = [];
+    function traversal(root) {
+        if (!root) return;
+        traversal(root.left);
+        arr.push(root.val);
+        traversal(root.right);
+    }
+    traversal(root);
+    for (let i = 1; i < arr.length; i++) {
+        if (arr[i] <= arr[i - 1]) return false;
+    }
+    return true;
 };
+
+function isValidBST(root) {//中序法
+    let max = null;
+    function traversal(root) {
+        if (!root) return true;
+        let left = traversal(root.left);
+        if (max && max.val >= root.val) return false;
+        max = root;
+        let right = traversal(root.right);
+        return left && right;
+    }
+    return traversal(root);
+}
 
 //test
 function TreeNode(val, left, right) {

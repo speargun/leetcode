@@ -37,7 +37,26 @@
  * @return {number[]}
  */
 var findMode = function (root) {
-
+    let maxCount = 0;
+    let result = [];
+    let pre = null;
+    function traversal(cur) {
+        if (!cur) return;
+        traversal(cur.left);
+        if (!pre) count = 1;
+        else if (pre.val == cur.val) count++;
+        else count = 1;
+        pre = cur;
+        if (count == maxCount) result.push(cur.val);
+        if (count > maxCount) {
+            maxCount = count;
+            result.splice(0, result.length, cur.val);
+        }
+        traversal(cur.right);
+        return;
+    }
+    traversal(root);
+    return result;
 };
 
 //test

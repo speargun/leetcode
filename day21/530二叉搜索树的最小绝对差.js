@@ -32,9 +32,53 @@
  * @param {TreeNode} root
  * @return {number}
  */
-var getMinimumDifference = function (root) {
-
+var getMinimumDifference = function (root) {//转数组
+    let arr = [];
+    let res = Infinity;
+    function traversal(root) {
+        if (!root) return;
+        traversal(root.left);
+        arr.push(root.val);
+        traversal(root.right);
+    }
+    traversal(root);
+    for (let i = 1; i < arr.length; i++) {
+        res = Math.min(res, arr[i] - arr[i - 1]);
+    }
+    return res;
 };
+
+function getMinimumDifference(root) {//递归
+    let res = Infinity;
+    let pre = null;
+    function traversal(root) {
+        if (!root) return;
+        traversal(root.left);
+        if (pre) res = Math.min(res, root.val - pre.val);
+        pre = root;
+        traversal(root.right);
+    }
+    traversal(root);
+    return res;
+}
+
+function getMinimumDifference(root) {//迭代
+    let stack = [];
+    let cur = root, pre = null;
+    let res = Infinity;
+    while (cur || stack.length) {
+        if (cur) {
+            stack.push(cur);
+            cur = cur.left;
+        } else {
+            cur = stack.pop();
+            if (pre) res = Math.min(res, cur.val - pre.val);
+            pre = cur;
+            cur = cur.right;
+        }
+    }
+    return res;
+}
 
 //test
 function TreeNode(val, left, right) {

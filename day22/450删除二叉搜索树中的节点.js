@@ -52,7 +52,24 @@
  * @return {TreeNode}
  */
 var deleteNode = function (root, key) {
-
+    if (!root) return root;//state1
+    if (root.val == key) {
+        if (!root.left && !root.right) return null;//state2
+        else if (!root.left) {//state3
+            return root.right;
+        } else if (!root.right) {//state4
+            return root.left;
+        } else {//state5
+            let cur = root.right;
+            while (cur.left) cur = cur.left;
+            cur.left = root.left;
+            root = root.right;
+            return root;
+        }
+    }
+    if (root.val > key) root.left = deleteNode(root.left, key);
+    if (root.val < key) root.right = deleteNode(root.right, key);
+    return root;
 };
 
 //test

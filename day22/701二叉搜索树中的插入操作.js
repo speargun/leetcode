@@ -41,9 +41,26 @@
  * @param {number} val
  * @return {TreeNode}
  */
-var insertIntoBST = function (root, val) {
-
+var insertIntoBST = function (root, val) {//递归法
+    if (!root) return new TreeNode(val);
+    if (root.val > val) root.left = insertIntoBST(root.left, val);
+    if (root.val < val) root.right = insertIntoBST(root.right, val);
+    return root;
 };
+
+function insertIntoBST(root, val) {//迭代
+    if (!root) return new TreeNode(val);
+    let cur = root, parent = root;
+    while (cur) {
+        parent = cur;
+        if (cur.val > val) cur = cur.left;
+        else cur = cur.right;
+    }
+    let node = new TreeNode(val);
+    if (val < parent.val) parent.left = node;
+    else parent.right = node;
+    return root;
+}
 
 //test
 function TreeNode(val, left, right) {

@@ -48,7 +48,16 @@
  * @return {TreeNode}
  */
 var convertBST = function (root) {
-
+    let pre = 0;
+    function traversal(cur) {
+        if (!cur) return;
+        traversal(cur.right);
+        cur.val += pre;
+        pre = cur.val;
+        traversal(cur.left);
+    }
+    traversal(root);
+    return root;
 };
 
 //test
